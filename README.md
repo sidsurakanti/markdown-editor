@@ -54,3 +54,17 @@ The app should now be running on `http://localhost:3000`.
 
 ## Contributing
 Refer to [CONTRIBUTING.md](./docs/CONTRIBUTING.md)
+
+## Roadmap
+
+- [x] Clean up code
+- [ ] Write a better README
+- [ ] Add a new feature
+
+## Support
+
+If you need help with anything or want to request new features, you can reach me on [discord](https://discord.com/users/521872289231273994) 👍
+
+## Acknowledgements
+
+Thanks to everyone who assisted me on this project ❤️
