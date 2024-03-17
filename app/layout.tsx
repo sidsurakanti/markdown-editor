@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={cn(poppins.className, "h-screen w-full antialiased")}>
+			<body className={cn(poppins.className, "h-screen w-full flex-col antialiased")}>
 				{children}
 			</body>
 		</html>

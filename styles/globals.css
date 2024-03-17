@@ -69,9 +69,34 @@
 @layer base {
 	* {
 		@apply border-border;
+		/* border: 1px solid red; */
 	}
 	body {
 		@apply bg-background text-foreground;
-		@apply border border-green-600;
 	}
+}
+
+#markdown pre code {
+	@apply bg-transparent  text-white !important;
+}
+
+/* custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1d1d1d00;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary));
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
+::selection {
+  background: #c36c7b;
 }
