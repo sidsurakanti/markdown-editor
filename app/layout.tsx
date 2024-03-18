@@ -15,7 +15,13 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={cn(poppins.className, "h-screen w-full flex-col antialiased")}>
+			<body
+				className={cn(
+					poppins.className,
+					"h-screen w-full flex-col antialiased"
+				)}
+			>
+				<div className="w-2/3 h-2/3 bg-indigo-500 absolute top-2/4 -left-1/4 rounded-[50%] -z-20 blur-3xl" />
 				{children}
 			</body>
 		</html>

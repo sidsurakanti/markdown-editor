@@ -63,7 +63,7 @@ export function Markdown({ content }: { content: string }) {
 	return (
 		<section
 			id="markdown"
-			className="rounded-md bg-gray-100 border border-border p-4 text-xl flex-1 leading-[40px] overflow-y-scroll"
+			className="rounded-md bg-gray-100/70 border border-border p-4 text-xl flex-1 leading-[40px] overflow-y-scroll"
 		>
 			{res}
 		</section>
