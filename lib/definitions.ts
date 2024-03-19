@@ -1,5 +1,21 @@
+import exp from "constants";
 import { BaseEditor } from "slate";
 import { ReactEditor } from "slate-react";
+
+export type Node = CustomEditor | CustomElement | CustomText;
+
+export type Path = number[];
+export interface Point {
+	path: Path;
+	offset: number;
+}
+
+interface Range {
+	anchor: Point;
+	focus: Point;
+}
+
+export type NodeEntry<T extends Node> = [T, Path];
 
 export type ParagraphElement = {
 	type: "paragraph";

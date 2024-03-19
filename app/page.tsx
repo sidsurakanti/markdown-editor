@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Slate, Editable, withReact, RenderElementProps } from "slate-react";
 import { Editor, Transforms, Element, Descendant, createEditor } from "slate";
 import { CodeElement, DefaultElement } from "@/components/BlockComponnets";
-import { CustomElement, CustomText } from "@/lib/definitions";
+import { CustomElement, CustomText, Node, NodeEntry } from "@/lib/definitions";
 
 const initialValue: Descendant[] = [
 	{
@@ -13,6 +13,7 @@ const initialValue: Descendant[] = [
 	},
 ];
 
+// maybe use useCallback for this?
 const renderElement = (props: RenderElementProps) => {
 	const element = props.element as CustomElement;
 
@@ -33,9 +34,14 @@ export default function Home() {
 				case "`":
 					event.preventDefault();
 
+					// downlevel iteration for this is needed bc of a bug w next.js and typescript
+					const [match]: Generator<NodeEntry<Node>> = Editor.nodes(editor, {
+						match: (n: Node) => Element.isElement(n) && n.type === "code",
+					});
+
 					Transforms.setNodes(
 						editor,
-						{ type: "code" },
+						{ type: match ? "paragraph" : "code" },
 						{ match: (n) => Element.isElement(n) && Editor.isBlock(editor, n) }
 					);
 					break;
