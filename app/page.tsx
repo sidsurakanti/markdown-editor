@@ -9,7 +9,7 @@ import { CustomElement, CustomText } from "@/lib/definitions";
 const initialValue: Descendant[] = [
 	{
 		type: "paragraph",
-		children: [{ text: "A line of text in a paragraph." }],
+		children: [{ text: "Type something here..." }],
 	},
 ];
 
@@ -44,9 +44,13 @@ export default function Home() {
 	};
 
 	return (
-		<main className="h-full w-4/5 mx-auto p-5 flex gap-5 ">
+		<main className="h-full w-4/5 mx-auto p-5 flex gap-5">
 			<Slate editor={editor} initialValue={initialValue}>
-				<Editable renderElement={renderElement} onKeyDown={eventHandler} />
+				<Editable
+					renderElement={renderElement}
+					onKeyDown={eventHandler}
+					className="w-full p-2 focus:outline-none bg-gray-200/20 border-2 border-gray-200/50 rounded-md"
+				/>
 			</Slate>
 		</main>
 	);
