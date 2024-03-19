@@ -82,21 +82,21 @@
 
 /* custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+	width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1d1d1d00;
+	background: #1d1d1d00;
 }
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--primary));
-  border-radius: 8px;
+	background: #1d1d1d30;
+	border-radius: 8px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #888;
+	background: #888;
 }
 
 ::selection {
-  background: #c36c7b;
+	background: #c36c7b;
 }
