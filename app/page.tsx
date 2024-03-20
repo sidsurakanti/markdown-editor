@@ -14,7 +14,13 @@ import {
 	DefaultElement,
 	LeafElement,
 } from "@/components/BlockComponnets";
-import { CustomElement, CustomText, Node, NodeEntry } from "@/lib/definitions";
+import type {
+	CustomEditor,
+	CustomElement,
+	CustomText,
+	Node,
+	NodeEntry,
+} from "@/lib/definitions";
 
 const initialValue: Descendant[] = [
 	{
@@ -22,6 +28,22 @@ const initialValue: Descendant[] = [
 		children: [{ text: "Type something here..." }],
 	},
 ];
+
+const Helpers = {
+	isBoldMarkActive: function (editor: CustomEditor): boolean {
+		const marks = Editor.marks(editor);
+		return marks ? marks.bold === true : false;
+	},
+
+	toggleBoldMark: function (editor: CustomEditor): void {
+		const isActive = this.isBoldMarkActive(editor);
+		if (isActive) {
+			Editor.removeMark(editor, "bold");
+		} else {
+			Editor.addMark(editor, "bold", true);
+		}
+	},
+};
 
 export default function Home() {
 	const [editor] = useState(() => withReact(createEditor()));
@@ -67,9 +89,7 @@ export default function Home() {
 
 				case "b":
 					event.preventDefault();
-					currentMarks?.bold
-						? Editor.removeMark(editor, "bold")
-						: Editor.addMark(editor, "bold", true);
+					Helpers.toggleBoldMark(editor);
 					break;
 
 				case "i":
@@ -77,11 +97,14 @@ export default function Home() {
 					currentMarks?.italic
 						? Editor.removeMark(editor, "italic")
 						: Editor.addMark(editor, "italic", true);
+					break;
+
 				case "u":
 					event.preventDefault();
 					currentMarks?.underline
 						? Editor.removeMark(editor, "underline")
 						: Editor.addMark(editor, "underline", true);
+					break;
 			}
 		}
 	};

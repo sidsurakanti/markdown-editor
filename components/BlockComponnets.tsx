@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import type { CustomText } from "@/lib/definitions";
 
 const DefaultElement = (props: any) => {
 	return <p {...props.attributes}>{props.children}</p>;
@@ -6,26 +7,30 @@ const DefaultElement = (props: any) => {
 
 const CodeElement = (props: any) => {
 	return (
-		<pre {...props.attributes} className="p-2 rounded-lg bg-stone-200">
+		<pre {...props.attributes} className="p-2 bg-stone-200">
 			<code>{props.children}</code>
 		</pre>
 	);
 };
 
 export const LeafElement = (props: any) => {
-	const markingStyles = {
-		bold: "font-semibold",
+	const leaf: CustomText = props.leaf;
+	const styles: { [key: string]: string } = {
+		bold: "font-medium",
 		italic: "italic",
-		underline: "underline",
+		underline: "underline underline-offset-2",
 		strikethrough: "line-through",
+		text: "",
 	};
 
-	// TODO: fix this
-	const mark = Object.keys(markingStyles).find((key) => props.leaf[key]);
-	console.log(mark);
+	let mark: string[] = [];
+
+	Object.keys(leaf).forEach((key: string) => {
+		mark.push(styles[key]);
+	});
 
 	return (
-		<span {...props.attributes} className={cn(mark)}>
+		<span {...props.attributes} className={cn(mark.join(" "))}>
 			{props.children}
 		</span>
 	);
