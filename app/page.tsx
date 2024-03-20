@@ -43,11 +43,13 @@ export default function Home() {
 
 	const eventHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
 		if (event.ctrlKey) {
+			const currentMarks = Editor.marks(editor);
 			switch (event.key) {
 				case "`":
 					event.preventDefault();
 
-					// downlevel iteration for this is needed bc of a bug w next.js and typescript
+					// downlevel iteration needs to be enabled for this is needed
+					// bc of a bug w next.js and typescript
 					const [match]: Generator<NodeEntry<Node>> = Editor.nodes(editor, {
 						match: (n: Node) => Element.isElement(n) && n.type === "code",
 					});
@@ -55,16 +57,31 @@ export default function Home() {
 					Transforms.setNodes(
 						editor,
 						{ type: match ? "paragraph" : "code" },
-						{ match: (n) => Element.isElement(n) && Editor.isBlock(editor, n) }
+						{
+							match: (n: Node) =>
+								Element.isElement(n) && Editor.isBlock(editor, n),
+						}
 					);
+
 					break;
+
 				case "b":
 					event.preventDefault();
-					const currMarks = Editor.marks(editor);
-					currMarks?.bold
+					currentMarks?.bold
 						? Editor.removeMark(editor, "bold")
 						: Editor.addMark(editor, "bold", true);
 					break;
+
+				case "i":
+					event.preventDefault();
+					currentMarks?.italic
+						? Editor.removeMark(editor, "italic")
+						: Editor.addMark(editor, "italic", true);
+				case "u":
+					event.preventDefault();
+					currentMarks?.underline
+						? Editor.removeMark(editor, "underline")
+						: Editor.addMark(editor, "underline", true);
 			}
 		}
 	};
@@ -76,7 +93,7 @@ export default function Home() {
 					renderElement={renderElement}
 					renderLeaf={renderLeaf}
 					onKeyDown={eventHandler}
-					className="w-full p-2 focus:outline-none bg-gray-200/20 border-2 border-gray-200/50 rounded-md"
+					className="w-full p-4 focus:outline-none bg-gray-200/20 border-2 border-gray-200/50 rounded-lg flex flex-col gap-1"
 				/>
 			</Slate>
 		</main>
