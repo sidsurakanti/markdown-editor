@@ -6,6 +6,7 @@ const DefaultElement = (props: any) => {
 };
 
 const CodeElement = (props: any) => {
+	console.log(props.children);
 	return (
 		<pre {...props.attributes} className="p-2 bg-stone-200">
 			<code>{props.children}</code>
