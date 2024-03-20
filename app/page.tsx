@@ -1,9 +1,19 @@
 "use client";
 
-import { useState } from "react";
-import { Slate, Editable, withReact, RenderElementProps } from "slate-react";
+import { useCallback, useState } from "react";
+import {
+	Slate,
+	Editable,
+	withReact,
+	RenderElementProps,
+	RenderLeafProps,
+} from "slate-react";
 import { Editor, Transforms, Element, Descendant, createEditor } from "slate";
-import { CodeElement, DefaultElement } from "@/components/BlockComponnets";
+import {
+	CodeElement,
+	DefaultElement,
+	LeafElement,
+} from "@/components/BlockComponnets";
 import { CustomElement, CustomText, Node, NodeEntry } from "@/lib/definitions";
 
 const initialValue: Descendant[] = [
@@ -13,20 +23,23 @@ const initialValue: Descendant[] = [
 	},
 ];
 
-// maybe use useCallback for this?
-const renderElement = (props: RenderElementProps) => {
-	const element = props.element as CustomElement;
-
-	switch (element.type) {
-		case "code":
-			return <CodeElement {...props} />;
-		default:
-			return <DefaultElement {...props} />;
-	}
-};
-
 export default function Home() {
 	const [editor] = useState(() => withReact(createEditor()));
+
+	const renderElement = useCallback((props: RenderElementProps) => {
+		const element = props.element as CustomElement;
+
+		switch (element.type) {
+			case "code":
+				return <CodeElement {...props} />;
+			default:
+				return <DefaultElement {...props} />;
+		}
+	}, []);
+
+	const renderLeaf = useCallback((props: RenderLeafProps) => {
+		return <LeafElement {...props} />;
+	}, []);
 
 	const eventHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
 		if (event.ctrlKey) {
@@ -45,6 +58,13 @@ export default function Home() {
 						{ match: (n) => Element.isElement(n) && Editor.isBlock(editor, n) }
 					);
 					break;
+				case "b":
+					event.preventDefault();
+					const currMarks = Editor.marks(editor);
+					currMarks?.bold
+						? Editor.removeMark(editor, "bold")
+						: Editor.addMark(editor, "bold", true);
+					break;
 			}
 		}
 	};
@@ -54,6 +74,7 @@ export default function Home() {
 			<Slate editor={editor} initialValue={initialValue}>
 				<Editable
 					renderElement={renderElement}
+					renderLeaf={renderLeaf}
 					onKeyDown={eventHandler}
 					className="w-full p-2 focus:outline-none bg-gray-200/20 border-2 border-gray-200/50 rounded-md"
 				/>

@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils";
+
 const DefaultElement = (props: any) => {
 	return <p {...props.attributes}>{props.children}</p>;
 };
@@ -9,5 +11,13 @@ const CodeElement = (props: any) => {
 		</pre>
 	);
 };
+
+export const LeafElement = (props: any) => {
+	return (
+		<span {...props.attributes} className={cn(props.leaf.bold ? "font-semibold" : "font-normal")}>
+			{props.children}
+		</span>
+	)
+}
 
 export { DefaultElement, CodeElement };
