@@ -2,11 +2,14 @@ import { cn } from "@/lib/utils";
 import type { CustomText } from "@/lib/definitions";
 
 const DefaultElement = (props: any) => {
-	return <p {...props.attributes}>{props.children}</p>;
+	return (
+		<p {...props.attributes} className="hover:bg-gray-200/50">
+			{props.children}
+		</p>
+	);
 };
 
 const CodeElement = (props: any) => {
-	console.log(props.children);
 	return (
 		<pre {...props.attributes} className="p-2 bg-stone-200">
 			<code>{props.children}</code>
@@ -17,7 +20,7 @@ const CodeElement = (props: any) => {
 export const LeafElement = (props: any) => {
 	const leaf: CustomText = props.leaf;
 	const styles: { [key: string]: string } = {
-		bold: "font-medium",
+		bold: "font-semibold",
 		italic: "italic",
 		underline: "underline underline-offset-2",
 		strikethrough: "line-through",
