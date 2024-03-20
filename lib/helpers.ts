@@ -1,5 +1,10 @@
 import { Editor, Transforms, Element } from "slate";
-import type { CustomEditor, Node, NodeEntry } from "@/lib/definitions";
+import type {
+	CustomEditor,
+	CustomText,
+	Node,
+	NodeEntry,
+} from "@/lib/definitions";
 
 export const UpdatedEditor = {
 	...Editor,

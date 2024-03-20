@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
-import type { CustomText } from "@/lib/definitions";
+import { RenderLeafProps } from "slate-react";
 
-const DefaultElement = (props: any) => {
+const DefaultBlock = (props: any) => {
 	return (
 		<p {...props.attributes} className="hover:bg-gray-200/50">
 			{props.children}
@@ -9,7 +9,7 @@ const DefaultElement = (props: any) => {
 	);
 };
 
-const CodeElement = (props: any) => {
+const CodeBlock = (props: any) => {
 	return (
 		<pre {...props.attributes} className="p-2 bg-stone-200">
 			<code>{props.children}</code>
@@ -17,8 +17,7 @@ const CodeElement = (props: any) => {
 	);
 };
 
-export const LeafElement = (props: any) => {
-	const leaf: CustomText = props.leaf;
+const LeafElement = ({ attributes, children, leaf }: RenderLeafProps) => {
 	const styles: { [key: string]: string } = {
 		bold: "font-semibold",
 		italic: "italic",
@@ -34,10 +33,10 @@ export const LeafElement = (props: any) => {
 	});
 
 	return (
-		<span {...props.attributes} className={cn(mark.join(" "))}>
-			{props.children}
+		<span {...attributes} className={cn(mark.join(" "))}>
+			{children}
 		</span>
 	);
 };
 
-export { DefaultElement, CodeElement };
+export { DefaultBlock, CodeBlock, LeafElement };

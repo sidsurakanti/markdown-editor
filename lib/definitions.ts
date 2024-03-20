@@ -21,7 +21,7 @@ export type ParagraphElement = {
 	children: CustomText[];
 };
 
-export type CodeElement = {
+export type CodeBlock = {
 	type: "code";
 	children: CustomText[];
 };
@@ -32,7 +32,7 @@ export type HeadingElement = {
 	children: CustomText[];
 };
 
-export type CustomElement = ParagraphElement | HeadingElement | CodeElement;
+export type CustomElement = ParagraphElement | HeadingElement | CodeBlock;
 
 export type FormattedText = {
 	text: string;

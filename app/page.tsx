@@ -9,11 +9,7 @@ import {
 	RenderLeafProps,
 } from "slate-react";
 import { Descendant, Editor, createEditor } from "slate";
-import {
-	CodeElement,
-	DefaultElement,
-	LeafElement,
-} from "@/components/BlockComponnets";
+import { CodeBlock, DefaultBlock, LeafElement } from "@/components/Components";
 import { type CustomElement } from "@/lib/definitions";
 import { Toolbar } from "@/components/Toolbar";
 import { UpdatedEditor } from "@/lib/helpers";
@@ -33,9 +29,9 @@ export default function Home() {
 
 		switch (element.type) {
 			case "code":
-				return <CodeElement {...props} />;
+				return <CodeBlock {...props} />;
 			default:
-				return <DefaultElement {...props} />;
+				return <DefaultBlock {...props} />;
 		}
 	}, []);
 
@@ -45,7 +41,6 @@ export default function Home() {
 
 	const eventHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
 		if (!event.ctrlKey) return;
-
 		switch (event.key) {
 			case "`":
 				event.preventDefault();
@@ -78,7 +73,7 @@ export default function Home() {
 					renderLeaf={renderLeaf}
 					onKeyDown={eventHandler}
 					className="w-full p-4 focus:outline-none bg-gray-200/20 border-2 border-gray-200/50 rounded-lg flex flex-col gap-1"
-					disableDefaultStyles
+					spellCheck
 				/>
 			</Slate>
 		</main>
