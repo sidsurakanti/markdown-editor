@@ -50,6 +50,22 @@ export const UpdatedEditor = {
 		}
 	},
 
+	isMarkActive: function (editor: CustomEditor, format: string): boolean {
+		const marks = Editor.marks(editor) as {
+			[key: string]: boolean;
+		};
+		return marks ? marks[format] === true : false;
+	},
+
+	toggleMark: function (editor: CustomEditor, format: string): void {
+		const isActive = this.isMarkActive(editor, format);
+		if (isActive) {
+			Editor.removeMark(editor, format);
+		} else {
+			Editor.addMark(editor, format, true);
+		}
+	},
+
 	isCodeBlock: function (editor: CustomEditor): boolean {
 		// downlevel iteration needs to be enabled for this is needed
 		// bc of a bug w next.js and typescript

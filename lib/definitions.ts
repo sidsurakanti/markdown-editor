@@ -3,8 +3,8 @@ import { ReactEditor } from "slate-react";
 
 export type Node = CustomEditor | CustomElement | CustomText;
 
-export type Path = number[];
-export interface Point {
+type Path = number[];
+interface Point {
 	path: Path;
 	offset: number;
 }
@@ -16,17 +16,17 @@ interface Range {
 
 export type NodeEntry<T extends Node> = [T, Path];
 
-export type ParagraphElement = {
+type ParagraphElement = {
 	type: "paragraph";
 	children: CustomText[];
 };
 
-export type CodeBlock = {
+type CodeBlock = {
 	type: "code";
 	children: CustomText[];
 };
 
-export type HeadingElement = {
+type HeadingElement = {
 	type: "heading";
 	level: number;
 	children: CustomText[];

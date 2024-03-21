@@ -65,7 +65,7 @@ export default function Home() {
 	};
 
 	return (
-		<main className="h-full w-4/5 mx-auto p-5 flex gap-5">
+		<main className="h-full w-3/5 mx-auto p-5 flex gap-5">
 			<Slate editor={editor} initialValue={initialValue}>
 				<Toolbar />
 				<Editable
@@ -74,6 +74,7 @@ export default function Home() {
 					onKeyDown={eventHandler}
 					className="w-full p-4 focus:outline-none bg-gray-200/20 border-2 border-gray-200/50 rounded-lg flex flex-col gap-1"
 					spellCheck
+					autoFocus
 				/>
 			</Slate>
 		</main>
