@@ -44,6 +44,7 @@ export type FormattedText = {
 	bold?: true;
 	italic?: true;
 	underline?: true;
+	code?: true,
 };
 
 export type CustomText = FormattedText;

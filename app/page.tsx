@@ -60,8 +60,6 @@ export default function Home() {
 				break;
 
 			case ">":
-				console.log("yes");
-
 				event.preventDefault();
 				UpdatedEditor.toggleQuoteBlock(editor);
 				break;
@@ -84,7 +82,7 @@ export default function Home() {
 	};
 
 	return (
-		<main className="h-full w-3/5 mx-auto p-5 flex gap-5">
+		<main className="h-full md:w-3/5 mx-auto p-5 flex gap-5">
 			<Slate editor={editor} initialValue={initialValue}>
 				<Toolbar />
 				<Editable

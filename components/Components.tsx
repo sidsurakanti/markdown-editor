@@ -39,6 +39,17 @@ const LeafElement = ({
 	children,
 	leaf,
 }: RenderLeafProps): JSX.Element => {
+	if (leaf?.code) {
+		return (
+			<code
+				{...attributes}
+				className="bg-stone-200 text-indigo-500 p-1 px-2 rounded-md"
+			>
+				{children}
+			</code>
+		);
+	}
+
 	const styles: { [key: string]: string } = {
 		bold: "font-semibold",
 		italic: "italic",

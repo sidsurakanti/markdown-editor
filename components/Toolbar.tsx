@@ -55,7 +55,12 @@ export function Toolbar() {
 			>
 				<UnderlineIcon className="w-5 h-5" />
 			</Button>
-			<Button variant="ghost" size="icon" className={cn("rounded-full")}>
+			<Button
+				variant="ghost"
+				size="icon"
+				className={cn("rounded-full", isMarkActive("code") && "bg-rose-300")}
+				onClick={() => setMark("code")}
+			>
 				<CodeIcon className="w-5 h-5" />
 			</Button>
 		</section>
