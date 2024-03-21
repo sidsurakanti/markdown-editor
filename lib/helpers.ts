@@ -1,6 +1,7 @@
-import { Editor, Transforms, Element } from "slate";
+import { Editor, Transforms, Element, insertBreak, Range } from "slate";
 import type {
 	CustomEditor,
+	CustomElement,
 	CustomText,
 	Node,
 	NodeEntry,
@@ -8,48 +9,6 @@ import type {
 
 export const UpdatedEditor = {
 	...Editor,
-	isBoldMarkActive: function (editor: CustomEditor): boolean {
-		const marks = Editor.marks(editor);
-		return marks ? marks.bold === true : false;
-	},
-
-	toggleBoldMark: function (editor: CustomEditor): void {
-		const isActive = this.isBoldMarkActive(editor);
-		if (isActive) {
-			Editor.removeMark(editor, "bold");
-		} else {
-			Editor.addMark(editor, "bold", true);
-		}
-	},
-
-	isItalicMarkActive: function (editor: CustomEditor): boolean {
-		const marks = Editor.marks(editor);
-		return marks ? marks.italic === true : false;
-	},
-
-	toggleItalicMark: function (editor: CustomEditor): void {
-		const isActive = this.isItalicMarkActive(editor);
-		if (isActive) {
-			Editor.removeMark(editor, "italic");
-		} else {
-			Editor.addMark(editor, "italic", true);
-		}
-	},
-
-	isUnderlineMarkActive: function (editor: CustomEditor): boolean {
-		const marks = Editor.marks(editor);
-		return marks ? marks.underline === true : false;
-	},
-
-	toggleUnderlineMark: function (editor: CustomEditor): void {
-		const isActive = this.isUnderlineMarkActive(editor);
-		if (isActive) {
-			Editor.removeMark(editor, "underline");
-		} else {
-			Editor.addMark(editor, "underline", true);
-		}
-	},
-
 	isMarkActive: function (editor: CustomEditor, format: string): boolean {
 		const marks = Editor.marks(editor) as {
 			[key: string]: boolean;
@@ -101,6 +60,29 @@ export const UpdatedEditor = {
 		Transforms.setNodes(
 			editor,
 			{ type: isActive ? undefined : "quote" },
+			{ match: (n: Node) => Element.isElement(n) && Editor.isBlock(editor, n) }
+		);
+	},
+
+	isBlockType: function (
+		editor: CustomEditor,
+		type: CustomElement["type"]
+	): boolean {
+		const [match]: Generator<NodeEntry<Node>> = Editor.nodes(editor, {
+			match: (n: Node) => Element.isElement(n) && n.type === type,
+		});
+		return !!match;
+	},
+
+	toggleBlock: function (
+		editor: CustomEditor,
+		type: CustomElement["type"]
+	): void {
+		const isActive = this.isBlockType(editor, type);
+
+		Transforms.setNodes(
+			editor,
+			{ type: isActive ? undefined : type },
 			{ match: (n: Node) => Element.isElement(n) && Editor.isBlock(editor, n) }
 		);
 	},

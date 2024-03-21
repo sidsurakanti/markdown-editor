@@ -7,8 +7,9 @@ import {
 	withReact,
 	RenderElementProps,
 	RenderLeafProps,
+	ReactEditor,
 } from "slate-react";
-import { Descendant, createEditor } from "slate";
+import { Descendant, Node, createEditor, Element } from "slate";
 import {
 	QuoteBlock,
 	CodeBlock,
@@ -19,6 +20,7 @@ import { type CustomElement } from "@/lib/definitions";
 import { Toolbar } from "@/components/Toolbar";
 import { UpdatedEditor } from "@/lib/helpers";
 import { withHistory } from "slate-history";
+import isHotkey from "is-hotkey";
 
 const initialValue: Descendant[] = [
 	{
@@ -30,6 +32,23 @@ const initialValue: Descendant[] = [
 		],
 	},
 ];
+
+const MARKS: {
+	[key: string]: string;
+} = {
+	"mod+b": "bold",
+	"mod+i": "italic",
+	"mod+u": "underline",
+	"mod+`": "code",
+	"mod+>": "quote",
+};
+
+const BlockShortcuts: {
+	[key: string]: CustomElement["type"];
+} = {
+	"mod+`": "code",
+	"mod+o": "quote",
+};
 
 export default function Home() {
 	const [editor] = useState(() => withReact(withHistory(createEditor())));
@@ -52,38 +71,23 @@ export default function Home() {
 	}, []);
 
 	const eventHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
-		if (!event.ctrlKey) return;
-		console.log(event.key);
-		switch (event.key) {
-			case "`":
+		for (const mark in MARKS) {
+			if (isHotkey(mark, event)) {
 				event.preventDefault();
-				UpdatedEditor.toggleCodeBlock(editor);
-				break;
+				UpdatedEditor.toggleMark(editor, MARKS[mark]);
+			}
+		}
 
-			case ">":
+		for (const block in BlockShortcuts) {
+			if (isHotkey(block, event)) {
 				event.preventDefault();
-				UpdatedEditor.toggleQuoteBlock(editor);
-				break;
-
-			case "b":
-				event.preventDefault();
-				UpdatedEditor.toggleBoldMark(editor);
-				break;
-
-			case "i":
-				event.preventDefault();
-				UpdatedEditor.toggleItalicMark(editor);
-				break;
-
-			case "u":
-				event.preventDefault();
-				UpdatedEditor.toggleUnderlineMark(editor);
-				break;
+				UpdatedEditor.toggleBlock(editor, BlockShortcuts[block]);
+			}
 		}
 	};
 
 	return (
-		<main className="h-full md:w-3/5 mx-auto p-5 flex gap-5">
+		<main className="min-h-full md:w-3/5 mx-auto p-5 flex gap-5">
 			<Slate editor={editor} initialValue={initialValue}>
 				<Toolbar />
 				<Editable
