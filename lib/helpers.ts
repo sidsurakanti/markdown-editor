@@ -86,4 +86,22 @@ export const UpdatedEditor = {
 			{ match: (n: Node) => Element.isElement(n) && Editor.isBlock(editor, n) }
 		);
 	},
+
+	isQuoteBlock: function (editor: CustomEditor): boolean {
+		const [match]: Generator<NodeEntry<Node>> = Editor.nodes(editor, {
+			match: (n: Node) => Element.isElement(n) && n.type === "quote",
+		});
+
+		return !!match;
+	},
+
+	toggleQuoteBlock: function (editor: CustomEditor): void {
+		const isActive = this.isQuoteBlock(editor);
+
+		Transforms.setNodes(
+			editor,
+			{ type: isActive ? undefined : "quote" },
+			{ match: (n: Node) => Element.isElement(n) && Editor.isBlock(editor, n) }
+		);
+	},
 };

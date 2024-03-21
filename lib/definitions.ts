@@ -32,7 +32,12 @@ type HeadingElement = {
 	children: CustomText[];
 };
 
-export type CustomElement = ParagraphElement | HeadingElement | CodeBlock;
+type QuoteElement = {
+	type: "quote";
+	children: CustomText[];
+};
+
+export type CustomElement = ParagraphElement | HeadingElement | CodeBlock | QuoteElement;
 
 export type FormattedText = {
 	text: string;

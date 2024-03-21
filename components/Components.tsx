@@ -1,23 +1,44 @@
 import { cn } from "@/lib/utils";
-import { RenderLeafProps } from "slate-react";
+import { RenderElementProps, RenderLeafProps } from "slate-react";
 
-const DefaultBlock = (props: any) => {
+const DefaultBlock = ({
+	attributes,
+	children,
+}: RenderElementProps): JSX.Element => {
 	return (
-		<p {...props.attributes} className="hover:bg-gray-200/50">
-			{props.children}
+		<p {...attributes} className="hover:bg-gray-200/50 p-1">
+			{children}
 		</p>
 	);
 };
 
-const CodeBlock = (props: any) => {
+const CodeBlock = ({
+	attributes,
+	children,
+}: RenderElementProps): JSX.Element => {
 	return (
-		<pre {...props.attributes} className="p-2 bg-stone-200">
-			<code>{props.children}</code>
+		<pre {...attributes} className="p-4 bg-stone-200 whitespace-pre-wrap">
+			<code>{children}</code>
 		</pre>
 	);
 };
 
-const LeafElement = ({ attributes, children, leaf }: RenderLeafProps) => {
+const QuoteBlock = ({
+	attributes,
+	children,
+}: RenderElementProps): JSX.Element => {
+	return (
+		<blockquote {...attributes} className="pl-4 border-l-4">
+			<p>{children}</p>
+		</blockquote>
+	);
+};
+
+const LeafElement = ({
+	attributes,
+	children,
+	leaf,
+}: RenderLeafProps): JSX.Element => {
 	const styles: { [key: string]: string } = {
 		bold: "font-semibold",
 		italic: "italic",
@@ -39,4 +60,4 @@ const LeafElement = ({ attributes, children, leaf }: RenderLeafProps) => {
 	);
 };
 
-export { DefaultBlock, CodeBlock, LeafElement };
+export { DefaultBlock, CodeBlock, QuoteBlock, LeafElement };

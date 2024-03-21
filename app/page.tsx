@@ -8,16 +8,25 @@ import {
 	RenderElementProps,
 	RenderLeafProps,
 } from "slate-react";
-import { Descendant, Editor, createEditor } from "slate";
-import { CodeBlock, DefaultBlock, LeafElement } from "@/components/Components";
+import { Descendant, createEditor } from "slate";
+import {
+	QuoteBlock,
+	CodeBlock,
+	DefaultBlock,
+	LeafElement,
+} from "@/components/Components";
 import { type CustomElement } from "@/lib/definitions";
 import { Toolbar } from "@/components/Toolbar";
 import { UpdatedEditor } from "@/lib/helpers";
 
 const initialValue: Descendant[] = [
 	{
-		type: "paragraph",
-		children: [{ text: "Type something here..." }],
+		type: "quote",
+		children: [
+			{
+				text: "Enzo Ferrari once said, \"Ask a child to draw a car, and he'll color it red.\" And I think that's all you need to know about Ferrari.",
+			},
+		],
 	},
 ];
 
@@ -30,6 +39,8 @@ export default function Home() {
 		switch (element.type) {
 			case "code":
 				return <CodeBlock {...props} />;
+			case "quote":
+				return <QuoteBlock {...props} />;
 			default:
 				return <DefaultBlock {...props} />;
 		}
@@ -41,10 +52,18 @@ export default function Home() {
 
 	const eventHandler = (event: React.KeyboardEvent<HTMLDivElement>) => {
 		if (!event.ctrlKey) return;
+		console.log(event.key);
 		switch (event.key) {
 			case "`":
 				event.preventDefault();
 				UpdatedEditor.toggleCodeBlock(editor);
+				break;
+
+			case ">":
+				console.log("yes");
+
+				event.preventDefault();
+				UpdatedEditor.toggleQuoteBlock(editor);
 				break;
 
 			case "b":
