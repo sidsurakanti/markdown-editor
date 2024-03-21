@@ -18,6 +18,7 @@ import {
 import { type CustomElement } from "@/lib/definitions";
 import { Toolbar } from "@/components/Toolbar";
 import { UpdatedEditor } from "@/lib/helpers";
+import { withHistory } from "slate-history";
 
 const initialValue: Descendant[] = [
 	{
@@ -31,7 +32,7 @@ const initialValue: Descendant[] = [
 ];
 
 export default function Home() {
-	const [editor] = useState(() => withReact(createEditor()));
+	const [editor] = useState(() => withReact(withHistory(createEditor())));
 
 	const renderElement = useCallback((props: RenderElementProps) => {
 		const element = props.element as CustomElement;
