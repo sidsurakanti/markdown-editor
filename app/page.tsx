@@ -38,6 +38,38 @@ const initialValue: Descendant[] = [
 			},
 		],
 	},
+	{
+		type: "paragraph",
+		children: [
+			{
+				text: "bold ",
+				bold: true,
+			},
+			{
+				text: "italic ",
+				italic: true,
+			},
+			{
+				text: "underline",
+				underline: true,
+			},
+			{
+				text: " ",
+			},
+			{
+				text: "code",
+				code: true,
+			},
+		],
+	},
+	{
+		type: "code",
+		children: [
+			{
+				text: "console.log('Hello, World!');",
+			},
+		],
+	},
 ];
 
 const MARKS: {
@@ -122,12 +154,19 @@ const withShortcuts = (editor: CustomEditor) => {
 		if (selection) {
 			const [match] = Editor.nodes(editor, {
 				at: selection,
-				match: (n: Node) =>
-					Element.isElement(n) &&
-					!(n.type === "paragraph" || n.type === "code"),
+				match: (n: Node) => Element.isElement(n) && n.type !== "paragraph",
 			});
 
 			if (match) {
+				const isCodeBlock = match[0].type === "code";
+				console.log(match[0].type, isCodeBlock);
+
+				if (isCodeBlock) {
+					console.log("inserting text");
+					Transforms.insertFragment(editor, [{ text: "\n" }]);
+					return;
+				}
+
 				Transforms.insertNodes(editor, {
 					children: [{ text: "" }],
 					type: "paragraph",

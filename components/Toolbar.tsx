@@ -27,7 +27,7 @@ export function Toolbar() {
 	}
 
 	return (
-		<section className="fixed mx-auto bottom-10 bg-rose-200 inset-x-0 w-fit p-1 rounded-full flex justify-around gap-1 z-20">
+		<section className="fixed mx-auto bottom-10 bg-gradient-to-b from-rose-200 to-rose-300 border border-rose-300 inset-x-0 w-fit p-1 rounded-full flex justify-around gap-1 z-20">
 			<Button
 				variant="ghost"
 				size="icon"

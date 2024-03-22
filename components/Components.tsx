@@ -17,7 +17,10 @@ const CodeBlock = ({
 	children,
 }: RenderElementProps): JSX.Element => {
 	return (
-		<pre {...attributes} className="p-4 bg-stone-200 whitespace-pre-wrap">
+		<pre
+			{...attributes}
+			className="p-4 bg-stone-200 whitespace-pre-wrap text-rose-900"
+		>
 			<code>{children}</code>
 		</pre>
 	);
