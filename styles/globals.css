@@ -76,10 +76,6 @@
 	}
 }
 
-#markdown pre code {
-	@apply bg-transparent  text-white !important;
-}
-
 /* custom scrollbar */
 ::-webkit-scrollbar {
 	width: 8px;
