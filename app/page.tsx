@@ -7,7 +7,6 @@ import {
 	withReact,
 	RenderElementProps,
 	RenderLeafProps,
-	ReactEditor,
 } from "slate-react";
 import {
 	Descendant,
@@ -158,11 +157,24 @@ const withShortcuts = (editor: CustomEditor) => {
 			});
 
 			if (match) {
-				const isCodeBlock = match[0].type === "code";
-				console.log(match[0].type, isCodeBlock);
+				const block = match[0] as CustomElement;
+				const isCodeBlock = block.type === "code";
+				const aboveBlockEmpty = block.children[0].text.endsWith("\n");
+
+				console.log(aboveBlockEmpty, block.type, block.children[0].text);
 
 				if (isCodeBlock) {
-					console.log("inserting text");
+					if (aboveBlockEmpty) {
+						Transforms.insertNodes(editor, {
+							children: [{ text: "" }],
+							type: "paragraph",
+						});
+
+						// TODO: remove empty line from before (maybe)
+						return;
+					}
+
+					console.log("inserting new line in code block");
 					Transforms.insertFragment(editor, [{ text: "\n" }]);
 					return;
 				}
