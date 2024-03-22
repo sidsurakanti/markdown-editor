@@ -117,9 +117,14 @@ const withShortcuts = (editor: CustomEditor) => {
 
 	editor.insertBreak = () => {
 		const { selection } = editor;
+
+		// insert a blank element if the current selection is not a code block
 		if (selection) {
 			const [match] = Editor.nodes(editor, {
-				match: (n: Node) => Element.isElement(n) && n.type !== "paragraph",
+				at: selection,
+				match: (n: Node) =>
+					Element.isElement(n) &&
+					!(n.type === "paragraph" || n.type === "code"),
 			});
 
 			if (match) {
