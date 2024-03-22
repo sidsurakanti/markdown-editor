@@ -9,14 +9,21 @@ import {
 	RenderLeafProps,
 	ReactEditor,
 } from "slate-react";
-import { Descendant, Node, createEditor, Element } from "slate";
+import {
+	Descendant,
+	Node,
+	createEditor,
+	Element,
+	Editor,
+	Transforms,
+} from "slate";
 import {
 	QuoteBlock,
 	CodeBlock,
 	DefaultBlock,
 	LeafElement,
 } from "@/components/Components";
-import { type CustomElement } from "@/lib/definitions";
+import { CustomEditor, type CustomElement } from "@/lib/definitions";
 import { Toolbar } from "@/components/Toolbar";
 import { UpdatedEditor } from "@/lib/helpers";
 import { withHistory } from "slate-history";
@@ -51,7 +58,9 @@ const BlockShortcuts: {
 };
 
 export default function Home() {
-	const [editor] = useState(() => withReact(withHistory(createEditor())));
+	const [editor] = useState(() =>
+		withShortcuts(withReact(withHistory(createEditor())))
+	);
 
 	const renderElement = useCallback((props: RenderElementProps) => {
 		const element = props.element as CustomElement;
@@ -102,3 +111,28 @@ export default function Home() {
 		</main>
 	);
 }
+
+const withShortcuts = (editor: CustomEditor) => {
+	const { insertBreak } = editor;
+
+	editor.insertBreak = () => {
+		const { selection } = editor;
+		if (selection) {
+			const [match] = Editor.nodes(editor, {
+				match: (n: Node) => Element.isElement(n) && n.type !== "paragraph",
+			});
+
+			if (match) {
+				Transforms.insertNodes(editor, {
+					children: [{ text: "" }],
+					type: "paragraph",
+				});
+				return;
+			}
+		}
+
+		insertBreak();
+	};
+
+	return editor;
+};
