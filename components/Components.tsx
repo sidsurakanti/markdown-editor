@@ -19,7 +19,7 @@ const CodeBlock = ({
 	return (
 		<pre
 			{...attributes}
-			className="p-4 bg-slate-200 whitespace-pre-wrap text-blue-600"
+			className="p-6 bg-slate-200 whitespace-pre-wrap text-blue-600"
 		>
 			<code>{children}</code>
 		</pre>
@@ -33,7 +33,7 @@ const QuoteBlock = ({
 	return (
 		<blockquote
 			{...attributes}
-			className="pl-5 p-2 border-l-4 border-emerald-600 rounded bg-slate-100"
+			className="pl-5 p-3 border-l-4 border-purple-600 rounded bg-stone-100"
 		>
 			<p>{children}</p>
 		</blockquote>

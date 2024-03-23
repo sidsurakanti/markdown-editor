@@ -76,6 +76,12 @@
 	}
 }
 
+pre code {
+	/* color: inherit !important;
+	background: inherit !important; */
+	all: unset !important;
+}
+
 /* custom scrollbar */
 ::-webkit-scrollbar {
 	width: 8px;

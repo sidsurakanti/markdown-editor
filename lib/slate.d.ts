@@ -14,6 +14,8 @@ interface Range {
 	focus: Point;
 }
 
+export type Location = Path | Point | Range;
+
 export type NodeEntry<T extends Node> = [T, Path];
 
 type ParagraphElement = {
@@ -37,14 +39,18 @@ type QuoteElement = {
 	children: CustomText[];
 };
 
-export type CustomElement = ParagraphElement | HeadingElement | CodeBlock | QuoteElement;
+export type CustomElement =
+	| ParagraphElement
+	| HeadingElement
+	| CodeBlock
+	| QuoteElement;
 
 export type FormattedText = {
 	text: string;
 	bold?: true;
 	italic?: true;
 	underline?: true;
-	code?: true,
+	code?: true;
 };
 
 export type CustomText = FormattedText;

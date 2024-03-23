@@ -7,6 +7,7 @@ import {
 	withReact,
 	RenderElementProps,
 	RenderLeafProps,
+	ReactEditor,
 } from "slate-react";
 import {
 	Descendant,
@@ -15,6 +16,8 @@ import {
 	Element,
 	Editor,
 	Transforms,
+	Range,
+	Point,
 } from "slate";
 import {
 	QuoteBlock,
@@ -22,7 +25,7 @@ import {
 	DefaultBlock,
 	LeafElement,
 } from "@/components/Components";
-import { CustomEditor, type CustomElement } from "@/lib/slate";
+import { CustomEditor, type CustomElement, type Location } from "@/lib/slate";
 import { Toolbar } from "@/components/Toolbar";
 import { UpdatedEditor } from "@/lib/helpers";
 import { withHistory } from "slate-history";
@@ -144,7 +147,7 @@ export default function Home() {
 }
 
 const withShortcuts = (editor: CustomEditor) => {
-	const { insertBreak } = editor;
+	const { insertBreak, insertText } = editor;
 
 	editor.insertBreak = () => {
 		const { selection } = editor;
@@ -161,7 +164,7 @@ const withShortcuts = (editor: CustomEditor) => {
 				const isCodeBlock = block.type === "code";
 				const aboveBlockEmpty = block.children[0].text.endsWith("\n");
 
-				console.log(aboveBlockEmpty, block.type, block.children[0].text);
+				// console.log(aboveBlockEmpty, block.type, block.children[0].text);
 
 				if (isCodeBlock) {
 					if (aboveBlockEmpty) {
@@ -188,6 +191,56 @@ const withShortcuts = (editor: CustomEditor) => {
 		}
 
 		insertBreak();
+	};
+
+	editor.insertText = (text) => {
+		const SHORTCUTS: {
+			[key: string]: CustomElement["type"];
+		} = {
+			"```": "code",
+			">": "quote",
+		};
+
+		const { selection } = editor;
+
+		// check if the text in the block ends with a space
+		if (selection && text.endsWith(" ") && Range.isCollapsed(selection)) {
+			const { anchor } = selection; // current cursor position basically
+
+			// get current block
+			const block = Editor.above(editor, {
+				match: (n) => Element.isElement(n) && Editor.isBlock(editor, n),
+			});
+
+			const path = block![1]; // index of block in the editor
+
+			const start = Editor.start(editor, path); // start point of the current block
+
+			const range = { anchor, focus: start }; // range from start of the block to cursor
+
+			const beforeText = Editor.string(editor, range);
+			const type = SHORTCUTS[beforeText];
+
+			if (type) {
+				Transforms.select(editor, range);
+
+				if (!Range.isCollapsed(range)) {
+					Transforms.delete(editor);
+				}
+
+				const newProperties: Partial<CustomElement> = {
+					type,
+				};
+
+				Transforms.setNodes(editor, newProperties, {
+					match: (n) => Element.isElement(n) && Editor.isBlock(editor, n),
+				});
+
+				return;
+			}
+		}
+
+		insertText(text);
 	};
 
 	return editor;
