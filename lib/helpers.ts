@@ -5,7 +5,7 @@ import type {
 	CustomText,
 	Node,
 	NodeEntry,
-} from "@/lib/definitions";
+} from "@/lib/slate";
 
 export const UpdatedEditor = {
 	...Editor,

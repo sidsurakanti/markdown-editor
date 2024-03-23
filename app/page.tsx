@@ -22,7 +22,7 @@ import {
 	DefaultBlock,
 	LeafElement,
 } from "@/components/Components";
-import { CustomEditor, type CustomElement } from "@/lib/definitions";
+import { CustomEditor, type CustomElement } from "@/lib/slate";
 import { Toolbar } from "@/components/Toolbar";
 import { UpdatedEditor } from "@/lib/helpers";
 import { withHistory } from "slate-history";

@@ -19,7 +19,7 @@ const CodeBlock = ({
 	return (
 		<pre
 			{...attributes}
-			className="p-4 bg-stone-200 whitespace-pre-wrap text-rose-900"
+			className="p-4 bg-slate-200 whitespace-pre-wrap text-blue-600"
 		>
 			<code>{children}</code>
 		</pre>
@@ -31,7 +31,10 @@ const QuoteBlock = ({
 	children,
 }: RenderElementProps): JSX.Element => {
 	return (
-		<blockquote {...attributes} className="pl-4 border-l-4">
+		<blockquote
+			{...attributes}
+			className="pl-5 p-2 border-l-4 border-emerald-600 rounded bg-slate-100"
+		>
 			<p>{children}</p>
 		</blockquote>
 	);
@@ -46,7 +49,7 @@ const LeafElement = ({
 		return (
 			<code
 				{...attributes}
-				className="bg-stone-200 text-indigo-500 p-1 px-2 rounded-md"
+				className="bg-stone-200 text-rose-600 p-1 px-2 rounded-md"
 			>
 				{children}
 			</code>

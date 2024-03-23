@@ -10,7 +10,7 @@ import {
 	UnderlineIcon,
 } from "@/components/ui/icons";
 import { UpdatedEditor } from "@/lib/helpers";
-import { CustomEditor } from "@/lib/definitions";
+import { CustomEditor } from "@/lib/slate";
 
 export function Toolbar() {
 	const editor: CustomEditor = useSlate();
