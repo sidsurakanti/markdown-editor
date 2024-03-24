@@ -1,3 +1,4 @@
+import type { HeadingElement } from "@/lib/slate";
 import { cn } from "@/lib/utils";
 import { RenderElementProps, RenderLeafProps } from "slate-react";
 
@@ -40,6 +41,33 @@ const QuoteBlock = ({
 	);
 };
 
+const HeadingElement = ({
+	attributes,
+	children,
+	...props
+}: RenderElementProps): JSX.Element => {
+	const element = props.element as HeadingElement;
+	const size = `text-${6 - element.level}xl`;
+
+	return (
+		<h1 {...attributes} className={cn(size, "font-semibold pb-2")}>
+			{children}
+		</h1>
+	);
+};
+
+const HorizontalRule = ({
+	attributes,
+	children,
+}: RenderElementProps): JSX.Element => {
+	return (
+		<div {...attributes} contentEditable={false}>
+			{children}
+			<hr className="border-t-2 border-gray-400 w-full p-2" />
+		</div>
+	);
+};
+
 const LeafElement = ({
 	attributes,
 	children,
@@ -77,4 +105,20 @@ const LeafElement = ({
 	);
 };
 
-export { DefaultBlock, CodeBlock, QuoteBlock, LeafElement };
+const WrapperBlock = ({ children }: { children: React.ReactNode }) => {
+	return (
+		<div className="group flex gap-3">
+			<span></span>
+			{children}
+		</div>
+	);
+};
+
+export {
+	DefaultBlock,
+	CodeBlock,
+	QuoteBlock,
+	LeafElement,
+	HeadingElement,
+	HorizontalRule,
+};

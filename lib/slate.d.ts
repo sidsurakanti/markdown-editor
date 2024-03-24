@@ -39,10 +39,16 @@ type QuoteElement = {
 	children: CustomText[];
 };
 
+type HorizontalRuleElement = {
+	type: "hr";
+	children: CustomText[];
+};
+
 export type CustomElement =
 	| ParagraphElement
 	| HeadingElement
 	| CodeBlock
+	| HorizontalRuleElement
 	| QuoteElement;
 
 export type FormattedText = {

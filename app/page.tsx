@@ -24,6 +24,8 @@ import {
 	CodeBlock,
 	DefaultBlock,
 	LeafElement,
+	HeadingElement,
+	HorizontalRule,
 } from "@/components/Components";
 import { CustomEditor, type CustomElement, type Location } from "@/lib/slate";
 import { Toolbar } from "@/components/Toolbar";
@@ -32,6 +34,7 @@ import { withHistory } from "slate-history";
 import isHotkey from "is-hotkey";
 
 const initialValue: Descendant[] = [
+	{ type: "heading", level: 4, children: [{ text: "Bonjour" }] },
 	{
 		type: "quote",
 		children: [
@@ -104,6 +107,10 @@ export default function Home() {
 				return <CodeBlock {...props} />;
 			case "quote":
 				return <QuoteBlock {...props} />;
+			case "heading":
+				return <HeadingElement {...props} />;
+			case "hr":
+				return <HorizontalRule {...props} />;
 			default:
 				return <DefaultBlock {...props} />;
 		}
@@ -199,40 +206,67 @@ const withShortcuts = (editor: CustomEditor) => {
 		} = {
 			"```": "code",
 			">": "quote",
+			"#": "heading",
+			"##": "heading",
+			"###": "heading",
+			"####": "heading",
+			"---": "hr",
+			"***": "hr",
 		};
 
+		// * selection: basically where the path of the cursor is when they type the space
 		const { selection } = editor;
 
 		// check if the text in the block ends with a space
 		if (selection && text.endsWith(" ") && Range.isCollapsed(selection)) {
-			const { anchor } = selection; // current cursor position basically
+			const { anchor } = selection; // current cursor position
 
 			// get current block
-			const block = Editor.above(editor, {
+			const currentBlock = Editor.above(editor, {
 				match: (n) => Element.isElement(n) && Editor.isBlock(editor, n),
 			});
-
-			const path = block![1]; // index of block in the editor
-
+			const path = currentBlock ? currentBlock[1] : []; // index of block in the editor
 			const start = Editor.start(editor, path); // start point of the current block
 
-			const range = { anchor, focus: start }; // range from start of the block to cursor
+			// range of text from the start of the block to the current cursor position
+			const range = { anchor, focus: start };
 
 			const beforeText = Editor.string(editor, range);
-			const type = SHORTCUTS[beforeText];
+			const elementType = SHORTCUTS[beforeText];
 
-			if (type) {
+			if (elementType) {
+				// update selection to the range of the shortcut
 				Transforms.select(editor, range);
 
+				// delete the text in the range
 				if (!Range.isCollapsed(range)) {
 					Transforms.delete(editor);
 				}
 
-				const newProperties: Partial<CustomElement> = {
-					type,
-				};
+				let newElement: Partial<CustomElement>;
 
-				Transforms.setNodes(editor, newProperties, {
+				if (elementType === "heading") {
+					const level = beforeText.length;
+					newElement = {
+						type: elementType,
+						level,
+					};
+				} else {
+					newElement = {
+						type: elementType,
+					};
+				}
+
+				if (elementType === "hr") {
+					Transforms.setNodes(editor, newElement, {
+						match: (n) => Element.isElement(n) && Editor.isBlock(editor, n),
+					});
+					editor.insertBreak();
+
+					return;
+				}
+
+				Transforms.setNodes(editor, newElement, {
 					match: (n) => Element.isElement(n) && Editor.isBlock(editor, n),
 				});
 
