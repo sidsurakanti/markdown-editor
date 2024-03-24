@@ -1,8 +1,7 @@
 import { SVGProps } from "react";
 
-export function BoldIcon(
-	props: SVGProps<SVGSVGElement>
-) {
+
+export function BoldIcon(props: SVGProps<SVGSVGElement>) {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -19,10 +18,7 @@ export function BoldIcon(
 	);
 }
 
-
-export function UnderlineIcon(
-	props: SVGProps<SVGSVGElement>
-) {
+export function UnderlineIcon(props: SVGProps<SVGSVGElement>) {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -39,9 +35,7 @@ export function UnderlineIcon(
 	);
 }
 
-export function ItalicIcon(
-	props: SVGProps<SVGSVGElement>
-) {
+export function ItalicIcon(props: SVGProps<SVGSVGElement>) {
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -70,6 +64,23 @@ export function CodeIcon(props: SVGProps<SVGSVGElement>) {
 			<path
 				fill="currentColor"
 				d="M4.825 12.025L8.7 15.9q.275.275.275.7t-.275.7q-.275.275-.7.275t-.7-.275l-4.6-4.6q-.15-.15-.213-.325T2.426 12q0-.2.063-.375T2.7 11.3l4.6-4.6q.3-.3.713-.3t.712.3q.3.3.3.713t-.3.712zm14.35-.05L15.3 8.1q-.275-.275-.275-.7t.275-.7q.275-.275.7-.275t.7.275l4.6 4.6q.15.15.213.325t.062.375q0 .2-.062.375t-.213.325l-4.6 4.6q-.3.3-.7.288t-.7-.313q-.3-.3-.3-.712t.3-.713z"
+			></path>
+		</svg>
+	);
+}
+
+export function EditIcon(props: SVGProps<SVGSVGElement>) {
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="1em"
+			height="1em"
+			viewBox="0 0 24 24"
+			{...props}
+		>
+			<path
+				fill="currentColor"
+				d="M6.94 14.033a29.79 29.79 0 0 0-.606 1.783c.96-.697 2.101-1.14 3.418-1.304c2.513-.314 4.746-1.973 5.876-4.058l-1.456-1.455l1.413-1.415l1-1.002c.43-.429.915-1.224 1.428-2.367c-5.593.867-9.018 4.291-11.074 9.818M17 8.997l1 1c-1 3-4 6-8 6.5c-2.669.333-4.336 2.167-5.002 5.5H3c1-6 3-20 18-20c-1 2.997-1.998 4.996-2.997 5.997z"
 			></path>
 		</svg>
 	);

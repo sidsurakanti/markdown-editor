@@ -1,6 +1,12 @@
 import type { HeadingElement } from "@/lib/slate";
 import { cn } from "@/lib/utils";
 import { RenderElementProps, RenderLeafProps } from "slate-react";
+import { EditIcon } from "./ui/icons";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "@/components/ui/popover";
 
 const DefaultBlock = ({
 	attributes,
@@ -63,7 +69,7 @@ const HorizontalRule = ({
 	return (
 		<div {...attributes} contentEditable={false}>
 			{children}
-			<hr className="border-t-2 border-gray-400 w-full p-2" />
+			<hr className="border-t-2 border-gray-400 pb-2" />
 		</div>
 	);
 };
@@ -107,10 +113,19 @@ const LeafElement = ({
 
 const WrapperBlock = ({ children }: { children: React.ReactNode }) => {
 	return (
-		<div className="group flex gap-3">
-			<span></span>
-			{children}
-		</div>
+		<section className="group flex items-end gap-1">
+			<span>
+				<Popover>
+					<PopoverTrigger>
+						<EditIcon className="w-4 h-4 invisible group-hover:visible cursor-pointer transition-all duration-150" />
+					</PopoverTrigger>
+					<PopoverContent className="p-2 bg-gray-800 text-white rounded-lg">
+						Edit
+					</PopoverContent>
+				</Popover>
+			</span>
+			<div className="w-full">{children}</div>
+		</section>
 	);
 };
 
@@ -121,4 +136,5 @@ export {
 	LeafElement,
 	HeadingElement,
 	HorizontalRule,
+	WrapperBlock,
 };

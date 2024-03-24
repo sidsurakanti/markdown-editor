@@ -26,6 +26,7 @@ import {
 	LeafElement,
 	HeadingElement,
 	HorizontalRule,
+	WrapperBlock,
 } from "@/components/Components";
 import { CustomEditor, type CustomElement, type Location } from "@/lib/slate";
 import { Toolbar } from "@/components/Toolbar";
@@ -104,15 +105,35 @@ export default function Home() {
 
 		switch (element.type) {
 			case "code":
-				return <CodeBlock {...props} />;
+				return (
+					<WrapperBlock>
+						<CodeBlock {...props} />
+					</WrapperBlock>
+				);
 			case "quote":
-				return <QuoteBlock {...props} />;
+				return (
+					<WrapperBlock>
+						<QuoteBlock {...props} />
+					</WrapperBlock>
+				);
 			case "heading":
-				return <HeadingElement {...props} />;
+				return (
+					<WrapperBlock>
+						<HeadingElement {...props} />
+					</WrapperBlock>
+				);
 			case "hr":
-				return <HorizontalRule {...props} />;
+				return (
+					<WrapperBlock>
+						<HorizontalRule {...props} />
+					</WrapperBlock>
+				);
 			default:
-				return <DefaultBlock {...props} />;
+				return (
+					<WrapperBlock>
+						<DefaultBlock {...props} />
+					</WrapperBlock>
+				);
 		}
 	}, []);
 
@@ -144,7 +165,7 @@ export default function Home() {
 					renderElement={renderElement}
 					renderLeaf={renderLeaf}
 					onKeyDown={eventHandler}
-					className="w-full p-4 focus:outline-none bg-gray-200/20 border-2 border-gray-200/50 rounded-lg flex flex-col gap-1"
+					className="w-full px-6 py-8 focus:outline-none bg-gray-200/20 border-2 border-gray-200/50 rounded-lg flex flex-col gap-1"
 					spellCheck
 					autoFocus
 				/>
@@ -229,7 +250,7 @@ const withShortcuts = (editor: CustomEditor) => {
 			const start = Editor.start(editor, path); // start point of the current block
 
 			// range of text from the start of the block to the current cursor position
-			const range = { anchor, focus: start };
+			const range: Range = { anchor, focus: start };
 
 			const beforeText = Editor.string(editor, range);
 			const elementType = SHORTCUTS[beforeText];
@@ -261,8 +282,12 @@ const withShortcuts = (editor: CustomEditor) => {
 					Transforms.setNodes(editor, newElement, {
 						match: (n) => Element.isElement(n) && Editor.isBlock(editor, n),
 					});
-					editor.insertBreak();
 
+					const isBlockBelow = Editor.after(editor, range);
+					if (!isBlockBelow) {
+						// insert new line
+						editor.insertBreak();
+					}
 					return;
 				}
 
