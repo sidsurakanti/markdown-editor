@@ -7,6 +7,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
+import { serializePageInfos } from "next/dist/build/utils";
 
 const DefaultBlock = ({
 	attributes,
@@ -53,7 +54,15 @@ const HeadingElement = ({
 	...props
 }: RenderElementProps): JSX.Element => {
 	const element = props.element as HeadingElement;
-	const size = `text-${6 - element.level}xl`;
+	const sizes: {
+		[key: string]: string;
+	} = {
+		1: "text-4xl",
+		2: "text-3xl",
+		3: "text-2xl",
+		4: "text-xl",
+	};
+	const size = sizes[element.level];
 
 	return (
 		<h1 {...attributes} className={cn(size, "font-semibold pb-2")}>
