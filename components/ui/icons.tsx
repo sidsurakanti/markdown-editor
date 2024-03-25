@@ -1,6 +1,5 @@
 import { SVGProps } from "react";
 
-
 export function BoldIcon(props: SVGProps<SVGSVGElement>) {
 	return (
 		<svg
@@ -81,6 +80,23 @@ export function EditIcon(props: SVGProps<SVGSVGElement>) {
 			<path
 				fill="currentColor"
 				d="M6.94 14.033a29.79 29.79 0 0 0-.606 1.783c.96-.697 2.101-1.14 3.418-1.304c2.513-.314 4.746-1.973 5.876-4.058l-1.456-1.455l1.413-1.415l1-1.002c.43-.429.915-1.224 1.428-2.367c-5.593.867-9.018 4.291-11.074 9.818M17 8.997l1 1c-1 3-4 6-8 6.5c-2.669.333-4.336 2.167-5.002 5.5H3c1-6 3-20 18-20c-1 2.997-1.998 4.996-2.997 5.997z"
+			></path>
+		</svg>
+	);
+}
+
+export function QuoteIcon(props: SVGProps<SVGSVGElement>) {
+	return (
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="1em"
+			height="1em"
+			viewBox="0 0 24 24"
+			{...props}
+		>
+			<path
+				fill="currentColor"
+				d="M6.55 16.5L8 14q-1.65 0-2.825-1.175T4 10q0-1.65 1.175-2.825T8 6q1.65 0 2.825 1.175T12 10q0 .575-.137 1.063T11.45 12l-3.175 5.5q-.125.225-.35.363t-.5.137q-.575 0-.862-.5t-.013-1m9 0L17 14q-1.65 0-2.825-1.175T13 10q0-1.65 1.175-2.825T17 6q1.65 0 2.825 1.175T21 10q0 .575-.137 1.063T20.45 12l-3.175 5.5q-.125.225-.35.363t-.5.137q-.575 0-.862-.5t-.013-1"
 			></path>
 		</svg>
 	);

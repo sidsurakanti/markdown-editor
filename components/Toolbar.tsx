@@ -7,10 +7,12 @@ import {
 	BoldIcon,
 	CodeIcon,
 	ItalicIcon,
+	QuoteIcon,
 	UnderlineIcon,
 } from "@/components/ui/icons";
 import { UpdatedEditor } from "@/lib/helpers";
-import { CustomEditor } from "@/lib/slate";
+import { CustomEditor, CustomElement } from "@/lib/slate";
+import { format } from "path";
 
 export function Toolbar() {
 	const editor: CustomEditor = useSlate();
@@ -24,6 +26,14 @@ export function Toolbar() {
 
 	function setMark(format: string) {
 		UpdatedEditor.toggleMark(editor, format);
+	}
+
+	const isBlockActive = (format: CustomElement["type"]) => {
+		return UpdatedEditor.isBlockType(editor, format);
+	};
+
+	function setBlock(format: CustomElement["type"]) {
+		UpdatedEditor.toggleBlock(editor, format);
 	}
 
 	return (
@@ -62,6 +72,14 @@ export function Toolbar() {
 				onClick={() => setMark("code")}
 			>
 				<CodeIcon className="w-5 h-5" />
+			</Button>
+			<Button
+				variant="ghost"
+				size="icon"
+				className={cn("rounded-full", isBlockActive("quote") && "bg-rose-300")}
+				onClick={() => setBlock("quote")}
+			>
+				<QuoteIcon className="w-5 h-5" />
 			</Button>
 		</section>
 	);
