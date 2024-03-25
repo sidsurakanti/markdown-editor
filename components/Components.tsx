@@ -65,7 +65,7 @@ const HeadingElement = ({
 	const size = sizes[element.level];
 
 	return (
-		<h1 {...attributes} className={cn(size, "font-semibold pb-2")}>
+		<h1 {...attributes} className={cn(size, "font-semibold pb-2 p-1")}>
 			{children}
 		</h1>
 	);
