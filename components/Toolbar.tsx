@@ -8,6 +8,7 @@ import {
 	CodeIcon,
 	ItalicIcon,
 	QuoteIcon,
+	StrikethroughIcon,
 	UnderlineIcon,
 } from "@/components/ui/icons";
 import { UpdatedEditor } from "@/lib/helpers";
@@ -64,6 +65,17 @@ export function Toolbar() {
 				onClick={() => setMark("underline")}
 			>
 				<UnderlineIcon className="w-5 h-5" />
+			</Button>
+			<Button
+				variant="ghost"
+				size="icon"
+				className={cn(
+					"rounded-full",
+					isMarkActive("strikethrough") && "bg-rose-300"
+				)}
+				onClick={() => setMark("strikethrough")}
+			>
+				<StrikethroughIcon className="w-5 h-5" />
 			</Button>
 			<Button
 				variant="ghost"

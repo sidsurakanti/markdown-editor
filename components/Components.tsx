@@ -47,6 +47,14 @@ const QuoteBlock = ({
 	);
 };
 
+const NumberedListElement = ({ attributes, children }: RenderElementProps) => {
+	return (
+		<ol {...attributes} className="list-decimal list-inside p-1">
+			<li>{children}</li>
+		</ol>
+	);
+};
+
 const HeadingElement = ({
 	attributes,
 	children,
@@ -145,4 +153,5 @@ export {
 	HeadingElement,
 	HorizontalRule,
 	WrapperBlock,
+	NumberedListElement,
 };

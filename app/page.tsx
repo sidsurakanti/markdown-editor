@@ -27,6 +27,7 @@ import {
 	HeadingElement,
 	HorizontalRule,
 	WrapperBlock,
+	NumberedListElement,
 } from "@/components/Components";
 import { CustomEditor, type CustomElement, type Location } from "@/lib/slate";
 import { Toolbar } from "@/components/Toolbar";
@@ -139,6 +140,12 @@ export default function Home() {
 						<HorizontalRule {...props} />
 					</WrapperBlock>
 				);
+			case "ol":
+				return (
+					<WrapperBlock>
+						<NumberedListElement {...props} />
+					</WrapperBlock>
+				);
 			default:
 				return (
 					<WrapperBlock>
@@ -244,6 +251,7 @@ const withShortcuts = (editor: CustomEditor) => {
 			"####": "heading",
 			"---": "hr",
 			"***": "hr",
+			"1.": "ol",
 		};
 
 		// * selection: basically where the path of the cursor is when they type the space

@@ -44,11 +44,17 @@ type HorizontalRuleElement = {
 	children: CustomText[];
 };
 
+type NumberedListElement = {
+	type: "ol";
+	children: CustomText[];
+}
+
 export type CustomElement =
 	| ParagraphElement
 	| HeadingElement
 	| CodeBlock
 	| HorizontalRuleElement
+	| NumberedListElement
 	| QuoteElement;
 
 export type FormattedText = {
