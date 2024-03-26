@@ -63,6 +63,13 @@ const initialValue: Descendant[] = [
 				text: " ",
 			},
 			{
+				text: "strikethrough",
+				strikethrough: true,
+			},
+			{
+				text: " ",
+			},
+			{
 				text: "code",
 				code: true,
 			},

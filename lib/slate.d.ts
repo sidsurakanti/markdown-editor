@@ -57,6 +57,7 @@ export type FormattedText = {
 	italic?: true;
 	underline?: true;
 	code?: true;
+	strikethrough?: true
 };
 
 export type CustomText = FormattedText;

@@ -7,7 +7,6 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { serializePageInfos } from "next/dist/build/utils";
 
 const DefaultBlock = ({
 	attributes,
