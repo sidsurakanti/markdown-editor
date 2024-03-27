@@ -84,6 +84,14 @@ const initialValue: Descendant[] = [
 			},
 		],
 	},
+	{
+		type: "ol",
+		children: [
+			{
+				text: "Item 1",
+			},
+		],
+	},
 	{ type: "heading", level: 1, children: [{ text: "Heading 1" }] },
 	{ type: "heading", level: 2, children: [{ text: "Heading 2" }] },
 	{ type: "heading", level: 3, children: [{ text: "Heading 3" }] },
