@@ -29,7 +29,12 @@ import {
 	WrapperBlock,
 	NumberedListElement,
 } from "@/components/Components";
-import { CustomEditor, type CustomElement, type Location } from "@/lib/slate";
+import {
+	CustomEditor,
+	type CustomElement,
+	type Location,
+	type CustomText,
+} from "@/lib/slate";
 import { Toolbar } from "@/components/Toolbar";
 import { UpdatedEditor } from "@/lib/helpers";
 import { withHistory } from "slate-history";
@@ -88,7 +93,7 @@ const initialValue: Descendant[] = [
 		type: "ol",
 		children: [
 			{
-				text: "Item 1",
+				text: "Item",
 			},
 		],
 	},
@@ -216,10 +221,12 @@ const withShortcuts = (editor: CustomEditor) => {
 			if (match) {
 				const block = match[0] as CustomElement;
 				const isCodeBlock = block.type === "code";
-				const aboveBlockEmpty = block.children[0].text.endsWith("\n");
-
 				// console.log(aboveBlockEmpty, block.type, block.children[0].text);
+				console.log(block.children[0].text);
 
+				const aboveBlockEmpty = block.children[0].text
+					? block.children[0].text.endsWith("\n")
+					: true;
 				if (isCodeBlock) {
 					if (aboveBlockEmpty) {
 						Transforms.insertNodes(editor, {
@@ -315,6 +322,12 @@ const withShortcuts = (editor: CustomEditor) => {
 						// insert new line
 						editor.insertBreak();
 					}
+					return;
+				}
+
+				if (elementType === "ol") {
+					const wrapper: CustomElement = { type: "ol", children: [] };
+					Transforms.wrapNodes(editor, wrapper);
 					return;
 				}
 

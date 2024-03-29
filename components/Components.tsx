@@ -49,9 +49,8 @@ const QuoteBlock = ({
 
 const NumberedListElement = ({ attributes, children }: RenderElementProps) => {
 	return (
-		<ol {...attributes} className="list-decimal list-inside p-1">
-			<li>{children}</li>
-		</ol>
+		// <ol {...attributes} className="list-decimal list-inside p-1">
+		<li {...attributes}>{children}</li>
 	);
 };
 
