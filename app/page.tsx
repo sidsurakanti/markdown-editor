@@ -230,7 +230,7 @@ const withShortcuts = (editor: CustomEditor) => {
 				const isCodeBlock = block.type === "code";
 				const isListItem = block.type === "li";
 				// console.log(aboveBlockEmpty, block.type, block.children[0].text);
-				console.log(block.children[0].text);
+				// console.log(block.children[0].text);
 
 				const aboveBlockEmpty = block.children[0].text
 					? block.children[0].text.endsWith("\n")

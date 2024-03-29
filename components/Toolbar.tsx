@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
 	BoldIcon,
+	BulletedListIcon,
 	CodeIcon,
 	ItalicIcon,
 	QuoteIcon,
@@ -92,6 +93,14 @@ export function Toolbar() {
 				onClick={() => setBlock("quote")}
 			>
 				<QuoteIcon className="w-5 h-5" />
+			</Button>
+			<Button
+				variant="ghost"
+				size="icon"
+				className={cn("rounded-full", isBlockActive("li") && "bg-rose-300")}
+				onClick={() => setBlock("li")}
+			>
+				<BulletedListIcon className="w-5 h-5" />
 			</Button>
 		</section>
 	);
