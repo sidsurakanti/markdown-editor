@@ -27,7 +27,8 @@ import {
 	HeadingElement,
 	HorizontalRule,
 	WrapperBlock,
-	NumberedListElement,
+	ListElement,
+	BulletedListElement,
 } from "@/components/Components";
 import {
 	CustomEditor,
@@ -90,7 +91,7 @@ const initialValue: Descendant[] = [
 		],
 	},
 	{
-		type: "ol",
+		type: "li",
 		children: [
 			{
 				text: "Item",
@@ -153,10 +154,16 @@ export default function Home() {
 						<HorizontalRule {...props} />
 					</WrapperBlock>
 				);
-			case "ol":
+			case "li":
 				return (
 					<WrapperBlock>
-						<NumberedListElement {...props} />
+						<ListElement {...props} />
+					</WrapperBlock>
+				);
+			case "ul":
+				return (
+					<WrapperBlock>
+						<BulletedListElement {...props} />
 					</WrapperBlock>
 				);
 			default:
@@ -221,12 +228,14 @@ const withShortcuts = (editor: CustomEditor) => {
 			if (match) {
 				const block = match[0] as CustomElement;
 				const isCodeBlock = block.type === "code";
+				const isListItem = block.type === "li";
 				// console.log(aboveBlockEmpty, block.type, block.children[0].text);
 				console.log(block.children[0].text);
 
 				const aboveBlockEmpty = block.children[0].text
 					? block.children[0].text.endsWith("\n")
 					: true;
+
 				if (isCodeBlock) {
 					if (aboveBlockEmpty) {
 						Transforms.insertNodes(editor, {
@@ -240,6 +249,15 @@ const withShortcuts = (editor: CustomEditor) => {
 
 					console.log("inserting new line in code block");
 					Transforms.insertFragment(editor, [{ text: "\n" }]);
+					return;
+				}
+
+				if (isListItem) {
+					Transforms.insertNodes(editor, {
+						children: [{ text: "" }],
+						type: "li",
+					});
+
 					return;
 				}
 
@@ -266,7 +284,7 @@ const withShortcuts = (editor: CustomEditor) => {
 			"####": "heading",
 			"---": "hr",
 			"***": "hr",
-			"1.": "ol",
+			"-": "li",
 		};
 
 		// * selection: basically where the path of the cursor is when they type the space
@@ -325,9 +343,18 @@ const withShortcuts = (editor: CustomEditor) => {
 					return;
 				}
 
-				if (elementType === "ol") {
-					const wrapper: CustomElement = { type: "ol", children: [] };
-					Transforms.wrapNodes(editor, wrapper);
+				if (elementType === "li") {
+					const wrapper: CustomElement = { type: "ul", children: [] };
+
+					Transforms.wrapNodes(editor, wrapper, {
+						match: (n) =>
+							!Editor.isEditor(editor) &&
+							Element.isElement(n) &&
+							n.type === "li",
+					});
+					Transforms.setNodes(editor, newElement, {
+						match: (n) => Element.isElement(n) && Editor.isBlock(editor, n),
+					});
 					return;
 				}
 

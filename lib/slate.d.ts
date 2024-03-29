@@ -44,17 +44,23 @@ type HorizontalRuleElement = {
 	children: CustomText[];
 };
 
-type NumberedListElement = {
-	type: "ol";
+type ListElement = {
+	type: "li";
 	children: CustomText[];
-}
+};
+
+type BulletedListElement = {
+	type: "ul";
+	children: CustomText[];
+};
 
 export type CustomElement =
 	| ParagraphElement
 	| HeadingElement
 	| CodeBlock
 	| HorizontalRuleElement
-	| NumberedListElement
+	| ListElement
+	| BulletedListElement
 	| QuoteElement;
 
 export type FormattedText = {
@@ -63,7 +69,7 @@ export type FormattedText = {
 	italic?: true;
 	underline?: true;
 	code?: true;
-	strikethrough?: true
+	strikethrough?: true;
 };
 
 export type CustomText = FormattedText;

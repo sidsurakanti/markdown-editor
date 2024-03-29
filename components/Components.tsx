@@ -47,7 +47,7 @@ const QuoteBlock = ({
 	);
 };
 
-const NumberedListElement = ({ attributes, children }: RenderElementProps) => {
+const ListElement = ({ attributes, children }: RenderElementProps) => {
 	return (
 		// <ol {...attributes} className="list-decimal list-inside p-1">
 		<li {...attributes}>{children}</li>
@@ -86,6 +86,14 @@ const HorizontalRule = ({
 			{children}
 			<hr className="border-t-2 border-gray-400 pb-2" />
 		</div>
+	);
+};
+
+const BulletedListElement = ({ attributes, children }: RenderElementProps) => {
+	return (
+		<ul {...attributes} className="list-disc list-inside p-1 pb-2">
+			{children}
+		</ul>
 	);
 };
 
@@ -152,5 +160,6 @@ export {
 	HeadingElement,
 	HorizontalRule,
 	WrapperBlock,
-	NumberedListElement,
+	ListElement,
+	BulletedListElement,
 };
