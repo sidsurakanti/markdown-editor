@@ -48,10 +48,7 @@ const QuoteBlock = ({
 };
 
 const ListElement = ({ attributes, children }: RenderElementProps) => {
-	return (
-		// <ol {...attributes} className="list-decimal list-inside p-1">
-		<li {...attributes}>{children}</li>
-	);
+	return <li {...attributes}>{children}</li>;
 };
 
 const HeadingElement = ({
@@ -91,9 +88,20 @@ const HorizontalRule = ({
 
 const BulletedListElement = ({ attributes, children }: RenderElementProps) => {
 	return (
-		<ul {...attributes} className="list-disc list-inside p-1 pb-2">
+		<ul {...attributes} className="list-disc list-inside p-1 pb-2 bg-blue-500">
 			{children}
 		</ul>
+	);
+};
+
+const OrderedListElement = ({ attributes, children }: RenderElementProps) => {
+	return (
+		<ol
+			{...attributes}
+			className="list-decimal list-inside p-1 pb-10 bg-red-500"
+		>
+			{children}
+		</ol>
 	);
 };
 
@@ -162,4 +170,5 @@ export {
 	WrapperBlock,
 	ListElement,
 	BulletedListElement,
+	OrderedListElement,
 };

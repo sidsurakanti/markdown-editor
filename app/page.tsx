@@ -160,7 +160,19 @@ export default function Home() {
 						<ListElement {...props} />
 					</WrapperBlock>
 				);
+			case "ol-li":
+				return (
+					<WrapperBlock>
+						<ListElement {...props} />
+					</WrapperBlock>
+				);
 			case "ul":
+				return (
+					<WrapperBlock>
+						<BulletedListElement {...props} />
+					</WrapperBlock>
+				);
+			case "ol":
 				return (
 					<WrapperBlock>
 						<BulletedListElement {...props} />
@@ -228,7 +240,7 @@ const withShortcuts = (editor: CustomEditor) => {
 			if (match) {
 				const block = match[0] as CustomElement;
 				const isCodeBlock = block.type === "code";
-				const isListItem = block.type === "li";
+				const isListItem = block.type === "li" || block.type === "ol-li";
 				// console.log(aboveBlockEmpty, block.type, block.children[0].text);
 				// console.log(block.children[0].text);
 
@@ -285,6 +297,7 @@ const withShortcuts = (editor: CustomEditor) => {
 			"---": "hr",
 			"***": "hr",
 			"-": "li",
+			"1.": "ol-li",
 		};
 
 		// * selection: basically where the path of the cursor is when they type the space
@@ -343,15 +356,19 @@ const withShortcuts = (editor: CustomEditor) => {
 					return;
 				}
 
-				if (elementType === "li") {
-					const wrapper: CustomElement = { type: "ul", children: [] };
+				if (elementType === "li" || elementType === "ol-li") {
+					const wrapper: CustomElement = {
+						type: elementType === "li" ? "ul" : "ol",
+						children: [],
+					};
 
 					Transforms.wrapNodes(editor, wrapper, {
 						match: (n) =>
 							!Editor.isEditor(editor) &&
 							Element.isElement(n) &&
-							n.type === "li",
+							n.type === elementType,
 					});
+
 					Transforms.setNodes(editor, newElement, {
 						match: (n) => Element.isElement(n) && Editor.isBlock(editor, n),
 					});

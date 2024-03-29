@@ -49,8 +49,18 @@ type ListElement = {
 	children: CustomText[];
 };
 
+type OLListElement = {
+	type: "ol-li";
+	children: CustomText[];
+};
+
 type BulletedListElement = {
 	type: "ul";
+	children: CustomText[];
+};
+
+type OrderedListElement = {
+	type: "ol";
 	children: CustomText[];
 };
 
@@ -61,6 +71,8 @@ export type CustomElement =
 	| HorizontalRuleElement
 	| ListElement
 	| BulletedListElement
+	| OrderedListElement
+	| OLListElement
 	| QuoteElement;
 
 export type FormattedText = {
