@@ -12,14 +12,14 @@ import {
 	StrikethroughIcon,
 	UnderlineIcon,
 } from "@/components/ui/icons";
-import { UpdatedEditor } from "@/lib/helpers";
+import { ExtendedEditor } from "@/lib/helpers";
 import { CustomEditor, CustomElement } from "@/lib/slate";
 import { format } from "path";
 
 export function Toolbar() {
 	const editor: CustomEditor = useSlate();
 	const isMarkActive = (format: string) => {
-		const marks = UpdatedEditor.marks(editor) as {
+		const marks = ExtendedEditor.marks(editor) as {
 			[key: string]: boolean;
 		};
 
@@ -27,15 +27,15 @@ export function Toolbar() {
 	};
 
 	function setMark(format: string) {
-		UpdatedEditor.toggleMark(editor, format);
+		ExtendedEditor.toggleMark(editor, format);
 	}
 
 	const isBlockActive = (format: CustomElement["type"]) => {
-		return UpdatedEditor.isBlockType(editor, format);
+		return ExtendedEditor.isBlockType(editor, format);
 	};
 
 	function setBlock(format: CustomElement["type"]) {
-		UpdatedEditor.toggleBlock(editor, format);
+		ExtendedEditor.toggleBlock(editor, format);
 	}
 
 	return (

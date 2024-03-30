@@ -88,7 +88,7 @@ const HorizontalRule = ({
 
 const BulletedListElement = ({ attributes, children }: RenderElementProps) => {
 	return (
-		<ul {...attributes} className="list-disc list-inside p-1 pb-2 bg-blue-500">
+		<ul {...attributes} className="list-disc list-inside p-1 pb-2 bg-rose-200">
 			{children}
 		</ul>
 	);
@@ -98,7 +98,7 @@ const OrderedListElement = ({ attributes, children }: RenderElementProps) => {
 	return (
 		<ol
 			{...attributes}
-			className="list-decimal list-inside p-1 pb-10 bg-red-500"
+			className="list-decimal list-inside p-1 pb-2 bg-blue-200"
 		>
 			{children}
 		</ol>
@@ -145,7 +145,7 @@ const LeafElement = ({
 const WrapperBlock = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<section className="group flex items-end gap-1">
-			<span>
+			{/* <span>
 				<Popover>
 					<PopoverTrigger>
 						<EditIcon className="w-4 h-4 invisible group-hover:visible cursor-pointer transition-all duration-150" />
@@ -154,7 +154,7 @@ const WrapperBlock = ({ children }: { children: React.ReactNode }) => {
 						Edit
 					</PopoverContent>
 				</Popover>
-			</span>
+			</span> */}
 			<div className="w-full">{children}</div>
 		</section>
 	);
