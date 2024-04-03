@@ -17,9 +17,9 @@ export function withShortcuts(editor: CustomEditor) {
 			if (match) {
 				const block = match[0] as CustomElement;
 				const isCodeBlock: boolean = block.type === "code";
-				const isListItem: boolean =
-					block.type === "li" || block.type === "ol-li";
-				console.log(block.type)
+				const isListItem: boolean = block.type === "ul" || block.type === "ol";
+
+				// console.log(block.type);
 				// console.log(aboveBlockEmpty, block.type, block.children[0].text);
 				// console.log(block.children[0].text);
 
