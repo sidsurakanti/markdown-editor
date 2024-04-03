@@ -56,12 +56,12 @@ type OLListElement = {
 
 type BulletedListElement = {
 	type: "ul";
-	children: CustomText[];
+	children: ListElement[];
 };
 
 type OrderedListElement = {
 	type: "ol";
-	children: CustomText[];
+	children: OLListElement[];
 };
 
 export type CustomElement =

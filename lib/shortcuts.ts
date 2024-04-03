@@ -1,5 +1,5 @@
 import { Node, Element, Editor, Transforms, Range } from "slate";
-import { CustomEditor, type CustomElement } from "@/lib/slate";
+import { CustomEditor, FormattedText, type CustomElement } from "@/lib/slate";
 
 export function withShortcuts(editor: CustomEditor) {
 	const { insertBreak, insertText } = editor;
@@ -23,11 +23,11 @@ export function withShortcuts(editor: CustomEditor) {
 				// console.log(aboveBlockEmpty, block.type, block.children[0].text);
 				// console.log(block.children[0].text);
 
-				const aboveBlockEmpty: boolean = block.children[0].text
-					? block.children[0].text.endsWith("\n")
-					: true;
-
 				if (isCodeBlock) {
+					const aboveBlock = block.children[0] as FormattedText;
+					const aboveBlockEmpty: boolean = aboveBlock.text
+						? aboveBlock.text.endsWith("\n")
+						: true;
 					if (aboveBlockEmpty) {
 						Transforms.insertNodes(editor, {
 							children: [{ text: "" }],

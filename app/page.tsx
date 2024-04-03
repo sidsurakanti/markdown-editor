@@ -132,10 +132,15 @@ const initialValue: Descendant[] = [
 		],
 	},
 	{
-		type: "li",
+		type: "ul",
 		children: [
 			{
-				text: "Item",
+				type: "li",
+				children: [
+					{
+						text: "Item",
+					},
+				],
 			},
 		],
 	},
