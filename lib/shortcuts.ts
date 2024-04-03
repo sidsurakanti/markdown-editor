@@ -19,6 +19,7 @@ export function withShortcuts(editor: CustomEditor) {
 				const isCodeBlock: boolean = block.type === "code";
 				const isListItem: boolean =
 					block.type === "li" || block.type === "ol-li";
+				console.log(block.type)
 				// console.log(aboveBlockEmpty, block.type, block.children[0].text);
 				// console.log(block.children[0].text);
 
@@ -139,12 +140,9 @@ export function withShortcuts(editor: CustomEditor) {
 						children: [],
 					};
 
-					// Transforms.wrapNodes(editor, wrapper, {
-					// 	match: (n) =>
-					// 		!Editor.isEditor(n) &&
-					// 		Element.isElement(n) &&
-					// 		n.type === elementType,
-					// });
+					Transforms.wrapNodes(editor, wrapper, {
+						match: (n) => !Editor.isEditor(n) && Element.isElement(n),
+					});
 					return;
 				}
 
