@@ -88,7 +88,7 @@ const HorizontalRule = ({
 
 const BulletedListElement = ({ attributes, children }: RenderElementProps) => {
 	return (
-		<ul {...attributes} className="list-disc list-inside p-1 pb-2 bg-rose-200">
+		<ul {...attributes} className="list-disc list-inside p-1 pb-2">
 			{children}
 		</ul>
 	);
@@ -96,10 +96,7 @@ const BulletedListElement = ({ attributes, children }: RenderElementProps) => {
 
 const OrderedListElement = ({ attributes, children }: RenderElementProps) => {
 	return (
-		<ol
-			{...attributes}
-			className="list-decimal list-inside p-1 pb-2 bg-blue-200"
-		>
+		<ol {...attributes} className="list-decimal list-inside p-1 pb-2">
 			{children}
 		</ol>
 	);

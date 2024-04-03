@@ -8,12 +8,20 @@ import {
 	BulletedListIcon,
 	CodeIcon,
 	ItalicIcon,
+	NumberedListIcon,
 	QuoteIcon,
 	StrikethroughIcon,
 	UnderlineIcon,
 } from "@/components/ui/icons";
 import { ExtendedEditor } from "@/lib/helpers";
-import { CustomEditor, CustomElement } from "@/lib/slate";
+import type {
+	BulletedListElement as TBulletedListElement,
+	OrderedListElement as TOrderedListElement,
+	CustomEditor,
+	CustomElement,
+} from "@/lib/slate";
+import { Transforms } from "slate";
+
 import { format } from "path";
 
 export function Toolbar() {
@@ -36,6 +44,19 @@ export function Toolbar() {
 
 	function setBlock(format: CustomElement["type"]) {
 		ExtendedEditor.toggleBlock(editor, format);
+	}
+
+	function toggleList(
+		type: TBulletedListElement["type"] | TOrderedListElement["type"]
+	) {
+		if (isBlockActive(type)) {
+			console.log(type);
+			ExtendedEditor.unwrapList(editor);
+			Transforms.setNodes(editor, { type: "paragraph", children: [] });
+		} else {
+			Transforms.setNodes(editor, { type: "li", children: [] });
+			ExtendedEditor.wrapList(editor, type);
+		}
 	}
 
 	return (
@@ -97,10 +118,18 @@ export function Toolbar() {
 			<Button
 				variant="ghost"
 				size="icon"
-				className={cn("rounded-full", isBlockActive("li") && "bg-rose-300")}
-				onClick={() => setBlock("li")}
+				className={cn("rounded-full", isBlockActive("ul") && "bg-rose-300")}
+				onClick={() => toggleList("ul")}
 			>
 				<BulletedListIcon className="w-5 h-5" />
+			</Button>
+			<Button
+				variant="ghost"
+				size="icon"
+				className={cn("rounded-full", isBlockActive("ol") && "bg-rose-300")}
+				onClick={() => toggleList("ol")}
+			>
+				<NumberedListIcon className="w-5 h-5" />
 			</Button>
 		</section>
 	);

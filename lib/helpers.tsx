@@ -1,5 +1,12 @@
 import { Editor, Transforms, Element } from "slate";
-import type { CustomEditor, CustomElement, Node, NodeEntry } from "@/lib/slate";
+import type {
+	BulletedListElement as TBulletedListElement,
+	CustomEditor,
+	CustomElement,
+	Node,
+	NodeEntry,
+	OrderedListElement as TOrderedListElement,
+} from "@/lib/slate";
 import {
 	QuoteBlock,
 	CodeBlock,
@@ -52,6 +59,21 @@ export const ExtendedEditor = {
 			{ type: isActive ? undefined : type },
 			{ match: (n: Node) => Element.isElement(n) && Editor.isBlock(editor, n) }
 		);
+	},
+
+	wrapList: function (
+		editor: CustomEditor,
+		type: TBulletedListElement["type"] | TOrderedListElement["type"]
+	) {
+		Transforms.wrapNodes(editor, { type, children: [] }, { split: true });
+	},
+
+	unwrapList: function (editor: CustomEditor) {
+		Transforms.unwrapNodes(editor, {
+			split: true,
+			match: (n: Node) =>
+				Element.isElement(n) && (n.type === "ul" || n.type === "ol"),
+		});
 	},
 };
 
